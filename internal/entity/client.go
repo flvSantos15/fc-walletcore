@@ -32,6 +32,19 @@ func NewClient(name string, email string) (*Client, error) {
 	return client, nil
 }
 
+func (c *Client) Update(name string, email string) error {
+	c.Name = name
+	c.Email = email
+	c.UpdatedAt = time.Now()
+
+	err := c.Validate()
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func (c *Client) Validate() error {
 	if c.Name == "" {
 		return errors.New("name is required")
